@@ -1,0 +1,38 @@
+{% extends "wrapper.html" %}
+
+{% block content %}
+{% load static %}
+
+ <main id="main">
+
+    <!-- ======= Features Section ======= -->
+    <section id="features" class="padd-section text-center">
+
+      <div class="container" data-aos="fade-up">
+        <div class="section-title text-center">
+          <h2>Добавить лекарство</h2>
+          <p class="separator">Тут можно добавить лекарство. Принимайте - а то получите по жеппе. </p>
+        </div>
+
+        <div class="col-lg-5 col-md-8">
+            <div class="form">
+              <form action="{% url 'main:add_drug' %}" method="post" role="form">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="name">Название</label>
+                  <input type="text" name="name" id="name" class="form-control" required>
+                </div>
+                <div class="form-group mt-3">
+                  <label for="description">Описание</label>
+                  <input type="text" class="form-control" id="description" name="description" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Добавить</button>
+              </form>
+            </div>
+          </div>
+
+      </div>
+    </section><!-- End Features Section -->
+
+  </main>
+{% endblock %}

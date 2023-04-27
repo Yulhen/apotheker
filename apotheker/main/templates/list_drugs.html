@@ -1,0 +1,34 @@
+{% extends "wrapper.html" %}
+
+{% block content %}
+{% load static %}
+
+  <!-- ======= Hero Section ======= -->
+  <main id="main">
+
+    <!-- ======= Features Section ======= -->
+    <section id="features" class="padd-section text-center">
+
+      <div class="container" data-aos="fade-up">
+        <div class="section-title text-center">
+          <h2>Мои лекарства</h2>
+          <p class="separator">Тут выведен список ваших лекарств. Принимайте - а то получите по жеппе. </p>
+        </div>
+
+        <div class="row" data-aos="fade-up" data-aos-delay="100">
+        {% for drug in drugs %}
+          <div class="col-md-6 col-lg-3">
+            <div class="feature-block">
+<!--              <img src="assets/img/svg/vector.svg" alt="img">-->
+              <h4>{{ drug.name }}</h4>
+              <p>{{ drug.description }}</p>
+            </div>
+          </div>
+        {% endfor %}
+
+        </div>
+      </div>
+    </section><!-- End Features Section -->
+
+  </main>
+{% endblock %}
