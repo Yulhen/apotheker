@@ -26,14 +26,23 @@ class Receipt(models.Model, ManagerMixin):
     def end_dt(self) -> datetime:
         return self.start_dt + timedelta(days=self.days - 1)
 
-    @property
-    def closest_medication(self) -> 'ReceiptSchedule':
+    def _get_closest_medication(self) -> tuple['ReceiptSchedule', bool]:
         now = datetime.now()
         schedules = self.schedules.order_by('time')
         for schedule in schedules:
-            if datetime.combine(now.date(), now.time()) > datetime.combine(now.date(), schedule.time):
-                return schedule
-        return schedules.first()
+            if datetime.combine(now.date(), now.time()) < datetime.combine(now.date(), schedule.time):
+                return schedule, True
+        return schedules.first(), False
+
+    @property
+    def is_closest_medication_today(self) -> bool:
+        _, is_today = self._get_closest_medication()
+        return is_today
+
+    @property
+    def closest_medication(self) -> 'ReceiptSchedule':
+        schedule, _ = self._get_closest_medication()
+        return schedule
 
     def __repr__(self) -> str:
         return f'{self.drug.name}, {self.user.username}'

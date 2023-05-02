@@ -81,16 +81,12 @@ def add_receipt(request: HttpRequest) -> HttpResponse:
 
 @login_required(login_url='main:login')
 def list_receipts(request: HttpRequest) -> HttpResponse:
-    def _key(r: Receipt):
-        return min([schedule.time for schedule in r.schedules.all()])
-
-    receipts = [r for r in Receipt.objects.all() if r.end_dt >= datetime.now().date()]
+    receipts = [r for r in Receipt.objects.filter(user=request.user)  if r.end_dt >= datetime.now().date() and r.is_closest_medication_today]
     context = {
-        'receipts': sorted(receipts, key=_key),
+        'receipts': sorted(receipts, key=lambda r: r.closest_medication.time),
     }
 
     return render(request, 'list_receipts.html', context)
-
 
 @login_required(login_url='main:login')
 def logout_request(request: HttpRequest) -> HttpResponse:
@@ -128,3 +124,11 @@ def login_request(request: HttpRequest) -> HttpResponse:
             messages.error(request, "Invalid username or password.")
     form = AuthenticationForm()
     return render(request=request, template_name="login.html", context={"login_form": form})
+
+
+def faq(request: HttpRequest) -> HttpResponse:
+    return render(request, 'faq.html')
+
+
+def contacts(request: HttpRequest) -> HttpResponse:
+    return render(request, 'contacts.html')
