@@ -11,8 +11,24 @@
       <div class="container" data-aos="fade-up">
         <div class="section-title text-center">
           <h2>Добавить лекарство</h2>
-          <p class="separator">Тут можно добавить лекарство. Принимайте - а то получите по жеппе. </p>
+          <p>Используйте привычное Вам название препарата и добавьте краткое описание его действия </p>
         </div>
+
+        {% if created_drug %}
+        <div class="alert alert-success" role="alert">
+          Препарат {{ created_drug.name }} успешно добавлен.
+        </div>
+        {% endif %}
+
+        {% if form_errors %}
+        <div class="alert alert-danger" role="alert">
+            <ol>
+                {% for error in form_errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ol>
+        </div>
+        {% endif %}
 
         <div class="col-lg-5 col-md-8">
             <div class="form">

@@ -23,5 +23,11 @@ app_name = 'main'
 urlpatterns = [
     path('', views.index, name='index'),
     path('drugs', views.list_drugs, name='list_drugs'),
+    path('receipts', views.list_receipts, name='list_receipts'),
     path('add-drug', views.add_drug, name='add_drug'),
+    path('delete-drug/<drug_id>', views.delete_drug, name='delete_drug'),
+    path('add-receipt', views.add_receipt, name='add_receipt'),
+    path("register", views.register_request, name="register"),
+    path("login", views.login_request, name="login"),
+    path("logout", views.logout_request, name="logout"),
 ]

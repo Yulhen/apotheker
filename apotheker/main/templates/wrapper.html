@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>eStartup Bootstrap Template - Index</title>
+  <title>Apotheker</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -52,19 +52,27 @@
       <nav id="navbar" class="navbar">
         <ul>
           <li><a class="nav-link scrollto active" href="{% url 'main:index' %}">Главная</a></li>
-          <li class="dropdown"><a href="#"><span>Лекарства</span> <i class="bi bi-chevron-down"></i></a>
+          {% if request.user.is_authenticated  %}
+          <li class="dropdown"><a href="#"><span>Препараты</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
-              <li><a href="{% url 'main:list_drugs' %}">Мои лекарства</a></li>
-              <li><a href="{% url 'main:add_drug' %}">Добавить лекарство</a></li>
+              <li><a href="{% url 'main:list_drugs' %}">Мои препараты</a></li>
+              <li><a href="{% url 'main:add_drug' %}">Добавить препарат</a></li>
             </ul>
           </li>
           <li class="dropdown"><a href="#"><span>Рецепты</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
-              <li><a href="#">Мои рецепты</a></li>
-              <li><a href="#">Добавить рецепт</a></li>
+              <li><a href="{% url 'main:list_receipts' %}">Мои рецепты</a></li>
+              <li><a href="{% url 'main:add_receipt' %}">Добавить рецепт</a></li>
             </ul>
           </li>
-          <li><a class="nav-link scrollto" href="#contact">Контакты</a></li>
+          <li class="dropdown"><a href="#"><span>{{ request.user.username }}</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="{% url 'main:logout' %}">Выйти</a></li>
+            </ul>
+          </li>
+          {% else %}
+          <li><a class="nav-link scrollto" href="{% url 'main:login' %}">Войти</a></li>
+          {% endif %}
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -85,78 +93,35 @@
         <div class="col-md-12 col-lg-4">
           <div class="footer-logo">
 
-            <a class="navbar-brand" href="#">eStartup</a>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the.</p>
+            <a class="navbar-brand" href="#">Apotheker</a>
+            <p> Новый взгляд на прием лекарственных препаратов. Индивидуальный подход. Удобство. </p>
 
           </div>
         </div>
 
+
+
+
         <div class="col-sm-6 col-md-3 col-lg-2">
           <div class="list-menu">
 
-            <h4>Abou Us</h4>
+            <h4>Помощь</h4>
 
             <ul class="list-unstyled">
-              <li><a href="#">About us</a></li>
-              <li><a href="#">Features item</a></li>
-              <li><a href="#">Live streaming</a></li>
-              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">FAQ</a></li>
+              <li><a href="#">Обратная связь</a></li>
             </ul>
 
           </div>
         </div>
 
-        <div class="col-sm-6 col-md-3 col-lg-2">
-          <div class="list-menu">
-
-            <h4>Abou Us</h4>
-
-            <ul class="list-unstyled">
-              <li><a href="#">About us</a></li>
-              <li><a href="#">Features item</a></li>
-              <li><a href="#">Live streaming</a></li>
-              <li><a href="#">Privacy Policy</a></li>
-            </ul>
-
-          </div>
-        </div>
-
-        <div class="col-sm-6 col-md-3 col-lg-2">
-          <div class="list-menu">
-
-            <h4>Support</h4>
-
-            <ul class="list-unstyled">
-              <li><a href="#">faq</a></li>
-              <li><a href="#">Editor help</a></li>
-              <li><a href="#">Contact us</a></li>
-              <li><a href="#">Privacy Policy</a></li>
-            </ul>
-
-          </div>
-        </div>
-
-        <div class="col-sm-6 col-md-3 col-lg-2">
-          <div class="list-menu">
-
-            <h4>Abou Us</h4>
-
-            <ul class="list-unstyled">
-              <li><a href="#">About us</a></li>
-              <li><a href="#">Features item</a></li>
-              <li><a href="#">Live streaming</a></li>
-              <li><a href="#">Privacy Policy</a></li>
-            </ul>
-
-          </div>
-        </div>
 
       </div>
     </div>
 
     <div class="copyrights">
       <div class="container">
-        <p>&copy; Copyrights eStartup. All rights reserved.</p>
+        <p>&copy;Все права защищены.</p>
         <div class="credits">
           <!--
           All the links in the footer should remain intact.

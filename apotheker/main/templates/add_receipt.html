@@ -1,0 +1,104 @@
+{% extends "wrapper.html" %}
+
+{% block content %}
+{% load static %}
+
+<main id="main">
+
+    <!-- ======= Features Section ======= -->
+    <section id="features" class="padd-section text-center">
+
+        <div class="container" data-aos="fade-up">
+            <div class="section-title text-center">
+                <h2>Задайте свой курс лечения</h2>
+                <p>Заполните форму и получайте напоминания о приеме препаратов </p>
+            </div>
+            
+            
+            {% if created_receipt %}
+            <div class="alert alert-success" role="alert">
+              Рецепт лекарства {{ created_receipt.drug.name }} для {{ request.user.username }} успешно добавлен.
+            </div>
+            {% endif %}
+    
+            {% if form_errors %}
+            <div class="alert alert-danger" role="alert">
+                <ol>
+                    {% for error in form_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ol>
+            </div>
+            {% endif %}
+
+            <div class="col-lg-5 col-md-8">
+                <div class="form">
+                    <form action="{% url 'main:add_receipt' %}" method="post" role="form">
+                        {% csrf_token %}
+
+                        <div class="form-group">
+                            <label for="drug">Название препарата</label>
+                            <select class="form-select" name="drug" id="drug">
+                                {% for drug in drugs %}
+                                <option value="{{ drug.id }}">{{ drug.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="days">Продолжительность курса приема в днях</label>
+                            <input type="text" class="form-control" id="days" name="days" required>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="start_dt">Дата начала приема</label>
+                            <input type="date" class="form-control" id="start_dt" name="start_dt" required>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            Число приемов
+                            <input type="number" class="form-control" id="scheduleNumber" value="1" min="1">
+                        </div>
+                        <div id="schedules"></div>
+
+                        <button type="submit" class="btn btn-primary">Добавить</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </section><!-- End Features Section -->
+
+</main>
+<script>
+    const getSchedulesNumber = () => {
+        return parseInt(document.getElementById('scheduleNumber').value);
+    };
+
+    const getScheduleForm = () => {
+        const div = document.createElement('div');
+        div.innerHTML = `
+            <div class="col-md-6">
+                <label for="amount" class="form-label">Дозировка</label>
+                <input type="number" class="form-control" id="amount" name="amount" required>
+            </div>
+            <div class="col-md-6">
+                <label for="time">Время</label>
+                <input type="time" class="form-control" id="time" name="time" required>
+            </div>
+        `;
+        return div;
+    };
+
+    const renderSchedules = () => {
+        const schedulesDiv = document.getElementById('schedules');
+        schedulesDiv.innerHTML = '';
+
+        const scheduleNumber = getSchedulesNumber();
+        for (let i = 0; i < scheduleNumber; i++) {
+            schedulesDiv.appendChild(getScheduleForm());
+        }
+
+    };
+    document.getElementById('scheduleNumber').onchange = document.getElementById('scheduleNumber').oninput = renderSchedules;
+    renderSchedules();
+</script>
+{% endblock %}

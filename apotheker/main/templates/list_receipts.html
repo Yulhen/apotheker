@@ -1,0 +1,56 @@
+{% extends "wrapper.html" %}
+
+{% block content %}
+{% load static %}
+<main id="main">
+
+    <!-- ======= Features Section ======= -->
+    <section id="features" class="padd-section text-center">
+
+        <div class="container" data-aos="fade-up">
+            <div class="section-title text-center">
+                <h2>Мои рецепты</h2>
+                <p>На этой странице представлен список всех ваших препаратов. Наведите курсор на карточку препарата,
+                    чтобы удалить позицию </p>
+            </div>
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Лекарство</th>
+                        <th scope="col">Время приема</th>
+                        <th scope="col">Дозировка</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for receipt in receipts %}
+                    <tr>
+                        <td>{{ receipt.drug.name }}</td>
+                        <td>{{ receipt.closest_medication.time }}</td>
+                        <td>{{ receipt.closest_medication.amount }}</td>
+                    </tr>
+<!--                    -->
+<!--                    <div class="col-md-6 col-lg-3">-->
+<!--                        <div class="feature-block">-->
+<!--                            <h4>{{ receipt.drug.name }} - {{ receipt.start_dt }} ({{ receipt.days }})</h4>-->
+<!--                            <p>{{ receipt.drug.description }}</p>-->
+<!--                            <h5>Приемы</h5>-->
+<!--                            <div>-->
+<!--                                <ul>-->
+<!--                                    {% for schedule in receipt.schedules.all %}-->
+<!--                                    <li>{{ schedule.time }} - {{ schedule.amount }}</li>-->
+<!--                                    {% endfor %}-->
+<!--                                </ul>-->
+<!--                            </div>-->
+
+<!--                        </div>-->
+<!--                    </div>-->
+
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section><!-- End Features Section -->
+
+</main>
+{% endblock %}

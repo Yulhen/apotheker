@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import Receipt, ReceiptSchedule, Drug
 
-# Register your models here.
+admin.site.register(Receipt)
+admin.site.register(ReceiptSchedule)
+admin.site.register(Drug)

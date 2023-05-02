@@ -3,32 +3,40 @@
 {% block content %}
 {% load static %}
 
-  <!-- ======= Hero Section ======= -->
-  <main id="main">
+<!-- ======= Hero Section ======= -->
+<main id="main">
 
     <!-- ======= Features Section ======= -->
     <section id="features" class="padd-section text-center">
 
-      <div class="container" data-aos="fade-up">
-        <div class="section-title text-center">
-          <h2>Мои лекарства</h2>
-          <p class="separator">Тут выведен список ваших лекарств. Принимайте - а то получите по жеппе. </p>
-        </div>
-
-        <div class="row" data-aos="fade-up" data-aos-delay="100">
-        {% for drug in drugs %}
-          <div class="col-md-6 col-lg-3">
-            <div class="feature-block">
-<!--              <img src="assets/img/svg/vector.svg" alt="img">-->
-              <h4>{{ drug.name }}</h4>
-              <p>{{ drug.description }}</p>
+        <div class="container" data-aos="fade-up">
+            <div class="section-title text-center">
+                <h2>Мои препараты</h2>
+                <p>На этой странице представлен список всех ваших препаратов. Наведите курсор на карточку препарата,
+                    чтобы удалить позицию </p>
             </div>
-          </div>
-        {% endfor %}
 
+            {% if deleted_drug %}
+            <div class="alert alert-success" role="alert">
+                Лекарство {{ deleted_drug }} успешно удалено.
+            </div>
+            {% endif %}
+
+            <div class="row" data-aos="fade-up" data-aos-delay="100">
+                {% for drug in drugs %}
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-block">
+                        <!--              <img src="assets/img/svg/vector.svg" alt="img">-->
+                        <h4>{{ drug.name }}</h4>
+                        <p>{{ drug.description }}</p>
+                        <a href="{% url 'main:delete_drug' drug.id %}">Удалить</a>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
         </div>
-      </div>
     </section><!-- End Features Section -->
 
-  </main>
+</main>
 {% endblock %}
